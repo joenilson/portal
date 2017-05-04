@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : portal_socialnetworks.xml
+    Description:
+        Estructura de la tabla portal_socialnetworks.
+-->
+<tabla>
+    <columna>
+        <nombre>sn_id</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+        <defecto>nextval('portal_socialnetworks_sn_id_seq'::regclass)</defecto>
+    </columna>
+    <columna>
+        <nombre>sn_logo</nombre>
+        <tipo>character varying(160)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>sn_name</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>sn_order</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>sn_status</nombre>
+        <tipo>boolean</tipo>
+        <nulo>NO</nulo>
+        <defecto>true</defecto>
+    </columna>
+    <columna>
+        <nombre>sn_url</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <restriccion>
+        <nombre>portal_socialnetworks_pkey</nombre>
+        <consulta>PRIMARY KEY (sn_id)</consulta>
+    </restriccion>
+</tabla>

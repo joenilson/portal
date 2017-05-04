@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : portal_base.xml
+    Description:
+        Estructura de la tabla portal_base.
+-->
+<tabla>
+    <columna>
+        <nombre>page_email</nombre>
+        <tipo>character varying(120)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>page_footer</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>page_id</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>page_logo</nombre>
+        <tipo>character varying(120)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>page_name</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>page_status</nombre>
+        <tipo>character varying(1)</tipo>
+        <nulo>NO</nulo>
+        <defecto>'M'::character varying</defecto>
+    </columna>
+    <columna>
+        <nombre>page_subtitle</nombre>
+        <tipo>character varying(160)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>page_template</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+        <defecto>1</defecto>
+    </columna>
+    <columna>
+        <nombre>page_title</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <restriccion>
+        <nombre>portal_base_pkey</nombre>
+        <consulta>PRIMARY KEY (page_id)</consulta>
+    </restriccion>
+</tabla>

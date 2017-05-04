@@ -1,0 +1,367 @@
+{include="header"}
+<!--
+Copyright (C) 2016 Joe Nilson <joenilson at gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header">
+                <h1>
+                    Administración Básica
+                    <a class="btn btn-sm btn-default hidden-xs" href="{$fsc->url()}" title="recargar la página">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+                </h1>
+                <form action="{$fsc->url()}" method="POST">
+                    {if="$GLOBALS['config2']['homepage']=='portal'"}
+                    <button class='btn btn-sm btn-danger' type='submit' name='tipo' value='desactivar-portal'>
+                        <span class="fa fa-ban"></span>&nbsp;Desactivar Portal como Página de Inicio
+                    </button>
+                    {else}
+                    <button class='btn btn-sm btn-success' type='submit' name='tipo' value='activar-portal'>
+                        <span class="fa fa-check-circle-o"></span>&nbsp;Activar Portal como Página de Inicio
+                    </button>
+                    {/if}
+                </form>
+                <span class="help-block">
+                    Aqui debe configurar la información que irá en las páginas internas.<br/>
+                    El <b>Nombre de la página</b> la debe configurar en la opción <a href="index.php?page=admin_empresa">Empresa/Web</a><br/>
+                    El <b>Título de la página</b> es lo que irá en cada página, puede ser el nombre de la empresa o puede ser cualquier otra información.<br/>
+                    El <b>Pie de página</b> comunmente es un texto que indica el copyright y puede incluir la información de la empresa que ya está ingresada.
+                </span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#basico" aria-controls="basico" role="tab" data-toggle="tab">Información Básica</a></li>
+                    <li role="presentation"><a href="#contenido" aria-controls="contenido" role="tab" data-toggle="tab">Contenido</a></li>
+                    <li role="presentation"><a href="#redessociales" aria-controls="redessociales" role="tab" data-toggle="tab">Redes Sociales</a></li>
+                    <li role="presentation"><a href="#imagenes" aria-controls="imagenes" role="tab" data-toggle="tab">Imágenes</a></li>
+                </ul>
+            </div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="basico" style="margin-bottom: 5px; padding-top: 15px;">
+                    <form class="form-horizontal" name="form_basic" action="{$fsc->url()}"  enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="tipo" value="basic-info">
+                        <input type="hidden" name="page_id" value="{$fsc->page_info->page_id}">
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="imagen-empresa" class="col-sm-2 control-label"><b>Logo</b></label>
+                                <div class="col-sm-4">
+                                    <img id="imagen-empresa" width="auto" height="200" src="{if="$fsc->page_info->page_logo!=''"}{$fsc->page_info->get_logo()}{else}{$fsc->noimagen}{/if}" alt="{$fsc->page_info->page_name}" class="img-thumbnail">
+                                    <label class="btn btn-default btn-xs btn-file image-input">
+                                        Cambiar <input type="file" style="display: none;" accept="image/png, image/jpeg" name="page_logo">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="page_name" class="col-sm-2 control-label"><b>Nombre de la página</b></label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="page_name" value="{$fsc->page_info->page_name}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="page_title" class="col-sm-2 control-label"><b>Título de la página</b></label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="page_title" value="{$fsc->page_info->page_title}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="page_subtitle" class="col-sm-2 control-label"><b>Subtítulo de la página</b></label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="page_subtitle" value="{$fsc->page_info->page_subtitle}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="page_email" class="col-sm-2 control-label"><b>Correo de Contacto</b></label>
+                                <div class="col-sm-4">
+                                    <input name="page_email" type="email" value="{$fsc->page_info->page_email}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="page_status" class="col-sm-2 control-label"><b>Estado de la página</b></label>
+                                <div class="col-sm-4">
+                                    <select class="input-sm" name="page_status" required>
+                                        <option value="">-----</option>
+                                        <option value="A" {if="$fsc->page_info->page_status=='A'"}selected{/if}>Activa</option>
+                                        <option value="M" {if="$fsc->page_info->page_status=='M'"}selected{/if}>En Mantenimiento</option>
+                                        <option value="D" {if="$fsc->page_info->page_status=='D'"}selected{/if}>Desactivada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="footer" class="col-sm-2 control-label"><b>Pie de página</b></label>
+                                <div class="col-sm-8">
+                                    <textarea id="page_footer" name="page_footer" class="summernote">
+                                        {$fsc->page_info->page_footer}
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="btn-cancel-form" class="btn btn-sm btn-danger">Cancelar Cambios</button>
+                                <button type="submit" id="btn-save-form"  class="btn btn-sm btn-primary">Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="contenido" style="margin-bottom: 5px; padding-top: 15px;">
+                    {loop="$fsc->portal_contenido->all($fsc->page_info->page_id)"}
+                    <div class="panel {if="$value->content_status"}page-default{else}panel-warning{/if}">
+                        <div class="panel-heading"><button type="submit" id="btn-save-content-form"  class="btn btn-sm btn-primary">Guardar Contenido</button></div>
+                        <div class="panel-body">
+                            <textarea id="content_data" name="content_data" class="summernote">
+                                {function="html_entity_decode($value->content_data)"}
+                            </textarea>
+                        </div>
+                    </div>
+                    {/loop}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="redessociales" style="margin-bottom: 5px; padding-top: 15px;">
+                    <div class="table table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2">Red Social</th>
+                                    <th class="col-sm-2">Logo de la Red Social</th>
+                                    <th class="col-sm-4">Página de Red Social</th>
+                                    <th class="col-sm-2 text-center">Activo?</th>
+                                    <th class="col-sm-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {loop="$fsc->socialnetworks"}
+                            <form action="{$fsc->url()}" method="POST">
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="tipo" value="socialnetworks">
+                                        <input type="hidden" name="sn_id" value="{$value->sn_id}">
+                                        <input type="hidden" name="sn_order" value="{$value->sn_order}">
+                                        <input type="text" class="input-sm form-control" name="sn_name" value="{$value->sn_name}">
+                                    </td>
+                                    <td>
+                                        <label for="sn_logo_twitter"><span class="fa fa-2x fa-twitter fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_twitter" value="fa fa-twitter fw" {if="$value->sn_logo=='fa fa-twitter fw'"}checked{/if}>
+                                        <label for="sn_logo_facebook"><span class="fa fa-2x fa-facebook fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_facebook" value="fa fa-facebook fw" {if="$value->sn_logo=='fa fa-facebook fw'"}checked{/if}>
+                                        <label for="sn_logo_linkedin"><span class="fa fa-2x fa-linkedin fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_linkedin" value="fa fa-linkedin fw" {if="$value->sn_logo=='fa fa-linkedin fw'"}checked{/if}>
+                                        <label for="sn_logo_github"><span class="fa fa-2x fa-github fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_github" value="fa fa-github fw" {if="$value->sn_logo=='fa fa-github fw'"}checked{/if}>
+                                        <label for="sn_logo_instagram"><span class="fa fa-2x fa-instagram fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_instagram" value="fa fa-instagram fw" {if="$value->sn_logo=='fa fa-instagram fw'"}checked{/if}>
+                                    </td>
+                                    <td><input type="text" class="input-sm form-control" name="sn_url" value="{$value->sn_url}"></td>
+                                    <td class="text-center">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="{if="$value->sn_status"}true{else}false{/if}" {if="$value->sn_status"}checked{/if} onchange="this.value=(this.value==='true')?'false':'true';" name="sn_status">
+                                                Activo
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-sm btn-danger" name="accion" value="eliminar"><span class="fa fa-trash"></span></button>
+                                        <button type="submit" class="btn btn-sm btn-primary" name="accion" value="agregar"><span class="fa fa-save"></span></button>
+                                    </td>
+                                </tr>
+                            </form>
+                            {/loop}
+                            <form action="{$fsc->url()}" method="POST">
+                                <tr class='alert-info'>
+                                    <td>
+                                        <input type="hidden" name="tipo" value="socialnetworks">
+                                        <input type="hidden" name="sn_id" value="">
+                                        <input type="hidden" name="sn_order" value="1">
+                                        <input type="text" class="input-sm form-control" name="sn_name" value="">
+                                    </td>
+                                    <td>
+                                        <label for="sn_logo_twitter"><span class="fa fa-2x fa-twitter fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_twitter" value="fa fa-twitter fw" onclick="$('#sn_url_begin').html('https://www.twitter.com/');this.form.sn_name.value = 'Twitter';">
+                                        <label for="sn_logo_facebook"><span class="fa fa-2x fa-facebook fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_facebook" value="fa fa-facebook fw" onclick="$('#sn_url_begin').html('https://www.facebook.com/');this.form.sn_name.value = 'Facebook';">
+                                        <label for="sn_logo_linkedin"><span class="fa fa-2x fa-linkedin fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_linkedin" value="fa fa-linkedin fw" onclick="$('#sn_url_begin').html('https://www.linkedin.com/');this.form.sn_name.value = 'LinkedIn';">
+                                        <label for="sn_logo_github"><span class="fa fa-2x fa-github fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_github" value="fa fa-github fw" onclick="$('#sn_url_begin').html('https://www.github.com/');this.form.sn_name.value = 'Github';">
+                                        <label for="sn_logo_instagram"><span class="fa fa-2x fa-instagram fw"></span></label>
+                                        <input type="radio" name="sn_logo" id="sn_logo_instagram" value="fa fa-instagram fw" onclick="$('#sn_url_begin').html('https://www.instagram.com/');this.form.sn_name.value = 'Instagram';">
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="input-group" aria-describedby="ayudaUrlSN">
+                                                <span class="input-group-addon" id="sn_url_begin"></span>
+                                                <input type="text" class="input-sm form-control" name="sn_url" value="">
+                                            </div>
+                                            <span id="ayudaUrlSN" class="help-block">Complete la dirección de la red social.</span>
+                                        </div>
+                                    <td class="text-center">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="true" checked name="sn_status">
+                                                Activo
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-sm btn-primary" name="accion" value="agregar"><span class="fa fa-save"></span></button>
+                                    </td>
+                                </tr>
+                            </form>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="imagenes" style="margin-bottom: 5px; padding-top: 15px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Imagenes del Template activo actualmente <b>{$fsc->page_template->template_name}</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        <img src="plugins/portal/view/templates/{$fsc->page_template->template_folder}/img/intro-bg.jpg" alt="Fondo Principal">
+                                        <div class="caption">
+                                            <h3>Fondo Principal</h3>
+                                            <p>Al cambiarlo, se borrará el anterior y se escribirá con el mismo nombre la nueva imagen.</p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalImagenPrimaria">Cambiar</button>
+                                                <button type="button" class="btn btn-default" role="button">Restaurar</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        <img src="plugins/portal/view/templates/{$fsc->page_template->template_folder}/img/banner-bg.jpg" alt="Fondo Secundario">
+                                        <div class="caption">
+                                            <h3>Fondo Secundario</h3>
+                                            <p>Al cambiarlo, se borrará el anterior y se escribirá con el mismo nombre la nueva imagen.</p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary" role="button" data-toggle="modal" data-target="#modalImagenSecundaria">Cambiar</button>
+                                                <button type="button" class="btn btn-default" role="button">Restaurar</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modalImagenPrimaria" aria-labelledby="modalImagenPrimaria">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar Fondo Principal</h4>
+            </div>
+            <form class="form-horizontal" name="form_basic" action="{$fsc->url()}"  enctype="multipart/form-data" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="imagen-principal" class="col-sm-2 control-label"><b>Logo</b></label>
+                        <div class="col-sm-4">
+                            <img id="imagen-principal" width="auto" height="300" src="" class="img-thumbnail">
+                            <label class="btn btn-default btn-xs btn-file image1-input">
+                                Cambiar <input type="file" style="display: none;" accept="image/png, image/jpeg" name="page_bg_principal">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar Cambio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modalImagenSecundaria" aria-labelledby="modalImagenSecundaria">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar Fondo Secundario</h4>
+            </div>
+            <form class="form-horizontal" name="form_basic" action="{$fsc->url()}"  enctype="multipart/form-data" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="imagen-secundaria" class="col-sm-2 control-label"><b>Logo</b></label>
+                        <div class="col-sm-4">
+                            <img id="imagen-secundaria" width="auto" height="300" src="" class="img-thumbnail">
+                            <label class="btn btn-default btn-xs btn-file image2-input">
+                                Cambiar <input type="file" style="display: none;" accept="image/png, image/jpeg" name="page_bg_secundaria">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar Cambio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{$fsc->get_js_location('summernote/lang/summernote-es-ES.js')}" type="text/javascript"></script>
+<script>
+    var url_portal_admin = '{$fsc->url()}';
+    $('.summernote').summernote({
+        lang: 'es-ES',
+        height: 300, // set editor height
+        minHeight: null, // set minimum height of editor
+        maxHeight: null, // set maximum height of editor
+        focus: false  // set focus to editable area after initializing summernote
+    });
+
+    $(".image-input input:file").change(function () {
+        var img = $('#imagen-empresa');
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            img.attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    $(".image1-input input:file").change(function () {
+        var img = $('#imagen-principal');
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            img.attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    $(".image2-input input:file").change(function () {
+        var img = $('#imagen-secundaria');
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            img.attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
+{include="footer"}

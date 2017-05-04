@@ -1,0 +1,44 @@
+<!--
+Copyright (C) 2016 Joe Nilson <joenilson at gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{if="$fsc->zona_privada"}
+    {include="header"}
+{else}
+    {include="templates/$fsc->page_template->template_folder/header"}
+    {if="$fsc->page_info->page_status=='M'"}
+    <style>
+        body { text-align: center; padding: 150px; }
+        h1 { font-size: 50px; }
+        body { font: 20px Helvetica, sans-serif; color: #333; }
+        article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+        a { color: #dc8100; text-decoration: none; }
+        a:hover { color: #333; text-decoration: none; }
+    </style>
+    <article>
+    <h1>Regresaremos pronto!</h1>
+    <div>
+        <p>Sentimos los inconvenientes, estamos realizando tareas de mantenimiento.<br/>
+           Estaremos de regreso pronto!</p>
+        <p>&mdash; {$fsc->page_info->page_name}</p>
+    </div>
+    </article>
+    {else}
+        {include="templates/$fsc->page_template->template_folder/navegacion"}
+        {include="templates/$fsc->page_template->template_folder/contenido"}
+        {include="templates/$fsc->page_template->template_folder/footer"}
+    {/if}
+{/if}
+{include="footer"}

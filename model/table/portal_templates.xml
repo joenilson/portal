@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : portal_templates.xml
+    Description:
+        Estructura de la tabla portal_templates.
+-->
+<tabla>
+    <columna>
+        <nombre>template_folder</nombre>
+        <tipo>character varying(160)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>template_id</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+        <defecto>nextval('portal_templates_template_id_seq'::regclass)</defecto>
+    </columna>
+    <columna>
+        <nombre>template_name</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>template_status</nombre>
+        <tipo>boolean</tipo>
+        <nulo>NO</nulo>
+        <defecto>true</defecto>
+    </columna>
+    <columna>
+        <nombre>template_type</nombre>
+        <tipo>character varying(60)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <restriccion>
+        <nombre>portal_templates_pkey</nombre>
+        <consulta>PRIMARY KEY (template_id)</consulta>
+    </restriccion>
+</tabla>
