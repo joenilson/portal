@@ -65,7 +65,7 @@ class portal_base extends fs_model {
 
     protected function install() {
         $this->empresa = new empresa();
-        return "INSERT INTO " . $this->table_name . " (page_id, page_name, page_title, page_footer, page_email, page_subtitle, page_logo, page_status) VALUES (" .
+        return "INSERT INTO " . $this->table_name . " (page_id, page_name, page_title, page_footer, page_email, page_subtitle, page_logo, page_status, page_template) VALUES (" .
                 $this->intval($this->empresa->id) . ", " .
                 $this->var2str($this->empresa->nombre) . ", " .
                 $this->var2str($this->empresa->nombrecorto) . ", " .
@@ -130,7 +130,7 @@ class portal_base extends fs_model {
 
     public function get_logo() {
         if ($this->page_logo) {
-            return 'tmp/'.FS_TMP_NAME.'portal/'.$this->page_logo;
+            return FS_PATH.FS_MYDOCS.'images/'.'portal/'.$this->page_logo;
         } else {
             return false;
         }

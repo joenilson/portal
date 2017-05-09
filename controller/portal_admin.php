@@ -46,7 +46,7 @@ class portal_admin extends fs_controller {
     private $upload_photo;
     public $noimagen = "plugins/portal/view/images/no_logo.jpg";
 
-    public function __construct($name = '', $title = 'home', $folder = '', $admin = FALSE, $shmenu = TRUE, $important = FALSE) {
+    public function __construct() {
         parent::__construct(__CLASS__, "Administración Básica", 'portal', TRUE, TRUE, FALSE);
     }
 
@@ -58,7 +58,7 @@ class portal_admin extends fs_controller {
         $this->share_extensions();
         //Creamos la carpeta para los archivos temporales como logo, firma y/o otros
         $basepath = dirname(dirname(dirname(__DIR__)));
-        $this->dir_portal = $basepath . "/tmp/" . FS_TMP_NAME . "portal";
+        $this->dir_portal = $basepath . DIRECTORY_SEPARATOR. "images" . DIRECTORY_SEPARATOR . "portal";
         //Validamos si existe el directorio raiz dentro de la carpeta tmp para los archivos del portal
         if (!is_dir($this->dir_portal)) {
             mkdir($this->dir_portal);

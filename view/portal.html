@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Regresaremos pronto!</h1>
     <div>
         <p>Sentimos los inconvenientes, estamos realizando tareas de mantenimiento.<br/>
-           Estaremos de regreso pronto!</p>
+           ¡Estaremos de regreso pronto!</p>
         <p>&mdash; {$fsc->page_info->page_name}</p>
     </div>
     </article>
@@ -41,4 +41,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         {include="templates/$fsc->page_template->template_folder/footer"}
     {/if}
 {/if}
+{if="$fsc->zona_privada"}
 {include="footer"}
+{/if}
